@@ -6,6 +6,7 @@ import { collection, deleteDoc, doc, getDocs, query, setDoc, getDoc } from "fire
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { Camera } from "react-camera-pro";
 import axios from 'axios';
+import { styled } from '@mui/system';
 
 const theme = createTheme({
   palette: {
@@ -27,6 +28,17 @@ const theme = createTheme({
     h5: { fontWeight: 500 },
   },
 });
+
+const Circle = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 40,
+  height: 40,
+  borderRadius: '50%',
+  backgroundColor: 'lightgreen',
+  color: 'black',
+}));
 
 export default function Home() {
   const [itemName, setItemName] = useState('');
@@ -122,11 +134,13 @@ export default function Home() {
         p={2}
       >
         <Box
-          width="800px"
+          width="90%"
+          maxWidth="800px"
           display="flex"
           justifyContent="space-between"
           mb={2}
-          spacing={20}
+          spacing={2}
+          flexWrap="wrap"
         >
           <TextField
             id="outlined-basic"
@@ -138,17 +152,17 @@ export default function Home() {
               style: { color: 'text.primary' },
             }}
             InputLabelProps={{
-              style: { color: 'text.secondary', paddingRight: '10px' },
+              style: { color: 'text.secondary' },
             }}
-            sx={{ paddingRight: '10px' }}
+            sx={{ flexGrow: 1, marginRight: '10px', marginBottom: '10px' }}
           />
-          <Button variant="contained" color="primary" onClick={handleOpen}>
+          <Button variant="contained" color="primary" onClick={handleOpen} sx={{ marginBottom: '10px' }}>
             Add
           </Button>
           <IconButton
             color="primary"
-            sx={{ padding: '10px 20px', marginLeft: '10px' }}
             onClick={handleOpenCamera}
+            sx={{ marginBottom: '10px' }}
           >
             <AddPhotoAlternateIcon />
           </IconButton>
@@ -166,7 +180,8 @@ export default function Home() {
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: 400,
+              width: '90%',
+              maxWidth: 400,
               bgcolor: 'background.paper',
               border: '2px solid #000',
               boxShadow: 24,
@@ -286,13 +301,12 @@ export default function Home() {
           </Box>
         </Modal>
 
-
-
         <Box
           border="1px solid #333"
           borderRadius={2}
           p={2}
-          width="800px"
+          width="90%"
+          maxWidth="800px"
           bgcolor="background.paper"
         >
           <Box
@@ -302,7 +316,7 @@ export default function Home() {
             alignItems="center"
             flexDirection="column"
           >
-            <Typography variant="h3" color="primary">
+            <Typography variant="h3" color="white">
               Inventory Tracker
             </Typography>
           </Box>
@@ -331,16 +345,22 @@ export default function Home() {
                 <Typography variant="h5" component="div">
                   {name.charAt(0).toUpperCase() + name.slice(1)}
                 </Typography>
-                <Typography variant="h5" component="div">
-                  Quantity: {count}
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => removeItem(name)}
-                >
-                  Remove
-                </Button>
+
+                <Box display="flex" alignItems="center">
+                  <Circle>
+                    <Typography variant="h5" component="div">
+                      {count}
+                    </Typography>
+                  </Circle>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => removeItem(name)}
+                    sx={{ marginLeft: 2 }}
+                  >
+                    Remove
+                  </Button>
+                </Box>
               </Box>
             ))}
           </Stack>
